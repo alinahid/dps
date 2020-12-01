@@ -1,0 +1,145 @@
+ 
+    <% if (user && user.admin != 1 && user.approved != true && user.submit!=true){ %>
+    <%- include('partials/header')%>
+    <%- include ("partials/messages") %>
+
+    <div class="ad_from">
+      <h2>DPS Addmission Form</h2>
+      <h3>Please fill the form below to continue...</h3>
+      <form method="post"  encType="multipart/form-data">
+        <label for="Class">Admission sought to : Class</label>
+        <input type="text" value="<%= typeof ad_class != 'undefined' ? ad_class : '' %>" id="Class" name="Class"><br>
+        <label for="fullname">Full Name</label>
+        <input type="text" value="<%= typeof fullname != 'undefined' ? fullname : '' %>" id="fullname" name="fullname"><br>
+        
+        <label for="dob">Date of Birth (In words and in Figures)</label>
+        <input type="date"  id="dob" name="dob" max="2019-12-31"><br>
+        <label for="dob_day">Day</label>
+        <input type="text" value="<%= typeof dob_day != 'undefined' ? dob_day : '' %>"id="dob_day" name="dob_day">
+        <label for="dob_Month">Month</label>
+        <input type="text" value="<%= typeof dob_Month != 'undefined' ? dob_Month : '' %>" id="dob_Month" name="dob_Month">
+        <label for="dob_year">year</label>
+        <input type="text" value="<%= typeof dob_year != 'undefined' ? dob_year : '' %>" id="dob_year" name="dob_year"><br>
+        <label for="nationality">Nationality</label>
+        <input type="text" value="<%= typeof nationality != 'undefined' ? nationality : '' %>" id="nationality" name="nationality">
+        <label for="Religion">Religion</label>
+        <input type="text" value="<%= typeof Religion != 'undefined' ? Religion : '' %>" id="Religion" name="Religion">
+        <label for="gender">gender</label>
+
+        <select id="gender" name="gender">
+           <option value="male">Male</option>
+           <option value="female">Female</option>
+           <option value="others">Others</option>
+            
+        </select><br>
+        <label for="fatherName">Father's full name</label>
+        <input type="text" value="<%= typeof fatherName != 'undefined' ? fatherName : '' %>" id="fatherName" name="fatherName"><br>
+        <label for="father_Occupation">Occupation</label>
+        <input type="text" value="<%= typeof father_Occupation != 'undefined' ? father_Occupation : '' %>" id="father_Occupation" name="father_Occupation">
+        <label for="father_Designation">Designation</label>
+        <input type="text" value="<%= typeof father_Designation != 'undefined' ? father_Designation: '' %>" id="father_Designation" name="father_Designation">
+        
+        <label for="father_Annual_Income">Annual Income</label>
+        <input type="text" value="<%= typeof father_Annual_Income != 'undefined' ? father_Annual_Income: '' %>" id="father_Annual_Income" name="father_Annual_Income"><br>
+        <label for="father_work">Organisation’s Name & Address</label>
+        <input type="text" value="<%= typeof father_work != 'undefined' ? father_work: '' %>" id="father_work" name="father_work"><br>
+        <label for="father_qual">Academic Qualification </label>
+        <input type="text" value="<%= typeof father_qual != 'undefined' ? father_qual : '' %>" id="father_qual" name="father_qual"><br>
+        <label for="father_contact">Contact no</label>
+        <input type="text" value="<%= typeof father_contact != 'undefined' ? father_contact : '' %>" id="father_contact" name="father_contact"><br>
+        <label for="motherName">Mother'full name</label>
+        <input type="text" value="<%= typeof motherName != 'undefined' ? motherName : '' %>" id="motherName" name="motherName"><br>
+        <label for="mother_Occupation">Occupation</label>
+        <input type="text" value="<%= typeof mother_Occupation != 'undefined' ? mother_Occupation : '' %>" id="mother_Occupation" name="mother_Occupation">
+        <label for="mother_Designation">Designation</label>
+        <input type="text" value="<%= typeof mother_Designation != 'undefined' ? mother_Designation: '' %>" id="mother_Designation" name="mother_Designation">
+        <label for="mother_Annual_Income">Annual Income</label>
+        <input type="text" value="<%= typeof mother_Annual_Income != 'undefined' ? mother_Annual_Income : '' %>" id="mother_Annual_Income" name="mother_Annual_Income"><br>
+        <label for="mother_work">Organisation’s Name & Address</label>
+        <input type="text" value="<%= typeof mother_work != 'undefined' ? mother_work : '' %>" id="mother_work" name="mother_work"><br>
+        <label for="mother_qual">Academic Qualification </label>
+        <input type="text" value="<%= typeof mother_qual != 'undefined' ? mother_qual : '' %>" id="mother_qual" name="mother_qual"><br>
+        <label for="mother_contact">Contact no</label>
+        <input type="text" value="<%= typeof mother_contact != 'undefined' ? mother_contact : '' %>" id="mother_contact" name="mother_contact"><br>
+        <label for="home">Home Town</label>
+        <input type="text" value="<%= typeof home != 'undefined' ? home : '' %>" id="home" name="home">
+        <label for="state">State</label>
+        <input type="text" value="<%= typeof state != 'undefined' ? state : '' %>" id="state" name="state">
+        <label for="country">Country</label>
+        <input type="text" value="<%= typeof fatherName != 'undefined' ? fatherName : '' %>" id="country" name="country"><br>
+        <label for="present_address">Adress(present)</label>
+        <input type="text"  value="<%= typeof fatherName != 'undefined' ? fatherName : '' %>"id="present_address" name="present_address"><br>
+        <label for="permanent_address">Adress(permanent)</label>
+        <input type="text" value="<%= typeof fatherName != 'undefined' ? fatherName : '' %>" id="permanent_address" name="permanent_address"><br>
+        <label for="others">Details of any brother of sister studying in DPS</label><br>
+        <label for="one_name">Name</label>
+        <input type="text" value="<%= typeof one_name != 'undefined' ? one_name : '' %>" id="one_name" name="one_name">
+        <label for="one_admsn">Admission No.</label>
+        <input type="text" value="<%= typeof one_admsn != 'undefined' ? one_admsn : '' %>" id="one_admsn" name="one_admsn">
+        <label for="one_class">Class</label>
+        <input type="text" value="<%= typeof one_class != 'undefined' ? one_class: '' %>" id="one_class" name="one_class">
+        <label for="one_Sec">Sec</label>
+        <input type="text" value="<%= typeof one_Sec != 'undefined' ? one_Sec : '' %>" id="one_Sec" name="one_Sec"><br>
+        <label for="two_name">Name</label>
+        <input type="text" value="<%= typeof two_name != 'undefined' ? two_name : '' %>" id="two_name" name="two_name">
+        <label for="two_admsn">Admission No.</label>
+        <input type="text" value="<%= typeof two_admsn != 'undefined' ? two_admsn : '' %>" id="two_admsn" name="two_admsn">
+        <label for="two_class">Class</label>
+        <input type="text" value="<%= typeof two_class != 'undefined' ? two_class: '' %>" id="two_class" name="two_class">
+        <label for="two_Sec">Sec</label>
+        <input type="text" value="<%= typeof two_Sec != 'undefined' ? two_Sec : '' %>" id="two_Sec" name="two_Sec"><br>
+        <label for="info">Any other info</label>
+        <input type="text" value="<%= typeof info != 'undefined' ? info : '' %>" id="info" name="info"><br>
+        <label for="prev_school"> Name of previous school</label>
+        <input type="text" value="<%= typeof prev_school != 'undefined' ? prev_school : '' %>" id="prev_school" name="prev_school"><br>
+      
+        <label for="prev_class"> Class in which he / she was studying in the last school.</label>
+        <input type="text" value="<%= typeof prev_class != 'undefined' ? prev_class : '' %>" id="prev_class" name="prev_class"><br>
+        <label for="prev_position">Position obtained in the last examination in the previous school</label>
+        <input type="text" value="<%= typeof prev_position != 'undefined' ? prev_position: '' %>" id="prev_position" name="prev_position"><br>
+        <label for="prev_medium">  Medium of instruction in previous school (English / Hindi).</label>
+        <input type="text" value="<%= typeof prev_medium != 'undefined' ? prev_medium : '' %>" id="prev_medium" name="prev_medium"><br>
+        <label for="skills"> Proficiency in games / co-curricular / outstanding achievements (if any) </label>
+        <input type="text" value="<%= typeof skills != 'undefined' ? skills : '' %>" id="skills" name="skills"><br>
+        <label for="skills_certificate">Certifcate may be enclosed for proficiency in Games / Co-curricular / Outstanding Achievements (if any)</label>
+        <input type="text" value="<%= typeof skills_certificate != 'undefined' ? skills_certificate : '' %>" id="skills_certificate" name="skills_certificate"><br>
+        <label for="prev_result">Details of marks obtained in the last annual exam (in %)</label>
+        <input type="text" value="<%= typeof prev_result != 'undefined' ? prev_result : '' %>" id="prev_result" name="prev_result"><br>
+        <div class="documents">
+          <h2>Upload the required documents here</h2>
+           
+              <label for="image">Your passport size photo</label>
+              <input type="file"   id="image" name="image"><br>
+           
+      </div>
+        <button type="submit" value="submit" class="btn_trans_green">Submit</button>
+
+      </form>
+    </div>
+   
+      <%- include('partials/footer') %>
+      <% }; %>
+      <% if (user && user.admin != 1 && user.approved != true && user.submit==true){ %>
+        <%- include('partials/header')%>
+        <div class="thankyou_message" style="text-align: center; padding: 5% 3%;line-height: 40px;" >
+          <h2> Thank you!! <br> your form is under review you will get a confirmation email once your form is approved by the school </h2>
+        </div>
+        
+        <%- include('partials/footer') %>
+      <% }; %>
+      <% if (user && user.admin != 1 && user.approved == true) { %>
+        <%- include('partials/header')%>
+        <div class="student_form_detail">
+          <p>Name : <%= student.name %></p>
+          <button class="btn_trans_green" > <a href="/form/approve/<%= student.id%>">Proceed to pay</a></button>
+          <button class="btn_trans_green" > <a href="/admissionPdf/<%= student.id%>">Pdf</a></button>
+           
+      </div>
+      <%- include('partials/footer') %>
+      <% }; %>
+      <% if (user && user.admin == 1) { %>
+        <%- include('partials/admin_header')%>
+        
+        <% }; %>
+</body>
+</html>
