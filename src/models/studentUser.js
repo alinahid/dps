@@ -32,6 +32,14 @@ const studentUserSchema = new mongoose.Schema({
   submit :{
     type:Boolean,
     default:false
+  },
+  paymentsubmit:{
+    type:Boolean,
+    default:false
+  },
+  paymentverified:{
+    type:Boolean,
+    default:false
   }
 }, { timestamps: true });
 

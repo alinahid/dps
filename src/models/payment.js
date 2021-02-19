@@ -3,7 +3,10 @@ const mongoose=require('mongoose');
 
 
 var paymentSchema= mongoose.Schema({
-
+  payment:{
+    type:Boolean,
+    default:false
+  },
     name: {
       type: String,
       require: true

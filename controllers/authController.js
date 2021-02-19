@@ -34,7 +34,8 @@ exports.registerHandle = (req, res) => {
             name,
             email,
             password,
-            password2
+            password2,
+            title:'Register | DPS Pakur'
         });
     } else {
         //------------ Validation passed ------------//
@@ -47,7 +48,8 @@ exports.registerHandle = (req, res) => {
                     name,
                     email,
                     password,
-                    password2
+                    password2,
+                    title:'Register | DPS Pakur'
                 });
             } else {
 
@@ -63,16 +65,16 @@ exports.registerHandle = (req, res) => {
                 const transporter = nodemailer.createTransport({
                     service: 'gmail',
                     auth: {
-                        user: "nahidali412@gmail.com",
-                        pass: "8824722331",
+                        user: "dpspakurweb@gmail.com",
+                        pass: "8877115641",
                     },
                 });
 
                 // send mail with defined transport object
                 const mailOptions = {
-                    from: '"Auth Admin" <nahidali412@gmail.com>', // sender address
+                    from: '"Auth Admin" <dpspakurweb@gmail.com>', // sender address
                     to: email, // list of receivers
-                    subject: "Account Verification: NodeJS Auth ✔", // Subject line
+                    subject: "Account Verification: DPS Pakur ✔", // Subject line
                     html: output, // html body
                 };
 
@@ -204,16 +206,16 @@ exports.forgotPassword = (req, res) => {
                         const transporter = nodemailer.createTransport({
                             service: 'gmail',
                             auth: {
-                                user: "nahidali412@gmail.com",
-                                pass: "8824722331",
+                                user: "dpspakurweb@gmail.com",
+                                pass: "8877115641",
                             },
                         });
 
                         // send mail with defined transport object
                         const mailOptions = {
-                            from: '"Auth Admin" <nahidali412@gmail.com>', // sender address
+                            from: '"Auth Admin" <dpspakurweb@gmail.com>', // sender address
                             to: email, // list of receivers
-                            subject: "Account Password Reset: NodeJS Auth ✔", // Subject line
+                            subject: "Account Password Reset: DPS Pakur ✔", // Subject line
                             html: output, // html body
                         };
 

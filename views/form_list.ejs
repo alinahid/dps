@@ -2,7 +2,7 @@
  <div class="formList">
     <% Users.forEach(function(user){ %>
         <ul>
-            <li><a href="/form/<%= user.id%>" > <%= user.name %></a></li>
+            <li><a href="/form/<%= user.id%>" > <%= user.name ||user.eleven.name%></a></li>
         <% }); %>
         </ul>
  </div>

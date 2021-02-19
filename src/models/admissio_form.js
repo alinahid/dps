@@ -2,6 +2,9 @@ const mongoose =require('mongoose')
  
 
 const admissionSchema ={
+    dclass:{
+        type:String
+    },
     name : {
         type:String,
     },
@@ -146,6 +149,12 @@ const admissionSchema ={
         type:String,
 
     },
+    fpic:{
+        type:String
+    },
+    mpic:{
+        type:String
+    },
     sign:{
         type:String,
     },
@@ -179,6 +188,107 @@ const admissionSchema ={
     submit :{
         type:Boolean,
         default : false
+    },
+    eleven:{
+        name:{
+            type:String
+        },
+        mob:{
+            type:String
+        },
+        dob:{
+            type:String
+        },
+        category:{
+            type:String
+        },
+        yop:{
+            type:String
+        },
+        school:{
+            type:String
+        },
+        nob:{
+            type:String
+        },
+        agg:{
+            type:String
+        },
+        maths:{
+            type:String
+        },
+        science:{
+            type:String
+        },
+        ceng:{
+            type:String
+        },
+        cmaths:{
+            type:String
+        },
+        stream:{
+            type:String
+        },
+        one:{
+            type:String
+        },
+        two:{
+            type:String
+        },
+        three:{
+            type:String
+        },
+        four:{
+            type:String
+        },
+        five:{
+            type:String
+        },
+        six:{
+            type:String
+        },
+        cone:{
+            type:String
+        },
+        ctwo:{
+            type:String
+        },
+        cthree:{
+            type:String
+        },
+        cfour:{
+            type:String
+        },
+        cfive:{
+            type:String
+        },
+        csix:{
+            type:String
+        },
+        father:{
+            type:String
+        },
+        mother:{
+            type:String
+        },
+        email:{
+            type:String
+        },
+        Occupation:{
+            type:String
+        },
+        phno:{
+            type:String
+        },
+        adress:{
+            type:String
+        },
+        pic:{
+            type:String
+        },
+        fpic:{
+            type:String
+        },
     }
     
    

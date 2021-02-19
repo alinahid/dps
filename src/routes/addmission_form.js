@@ -8,8 +8,10 @@ const PDFDocument = require('pdfkit');
 const router = new express.Router();
 var auth = require('../../config/auth'); 
 var isUser = auth.isUser;
+var isAdmin = auth.isAdmin;
 var studentUser =require('../models/studentUser');
-var mkdirp = require('mkdirp')
+var mkdirp = require('mkdirp');
+ 
 router.get("/admission",isUser,function(req,res){
    var User =req.user
    let errors=[]
@@ -21,7 +23,7 @@ router.get("/admission",isUser,function(req,res){
             user:User,
             student:Student,
             errors:errors,
-            
+            title:'Online Apply'
          })
       }
    })
@@ -29,15 +31,29 @@ router.get("/admission",isUser,function(req,res){
 })
 router.post('/admission',function(req,res){
    let errors = [];
-   user=req.user;
+   const dclass=req.body.dclass
+   if (dclass=="nton"){
+      var User=req.user;
+   var email=User.email
    if(req.files){
 
       var file =req.files.image
-       
+      var file1 =req.files.image1
+      var file2 =req.files.image2
       var fileName=file.name
-      file.mv(__dirname+'/file/'+fileName)
-     }else{
-         errors.push('please upload the documents')
+      var fileName1=file1.name
+      var fileName2=file2.name
+      if(file.mimetype=='image/jpeg'||file.mimetype=='image/png'&& file1.mimetype=='image/jpeg'||file1.mimetype=='image/png' && file2.mimetype=='image/jpeg'||file2.mimetype=='image/png'){
+         mkdirp('public/files/forms/'+email)
+         file.mv('public/files/forms/'+email +'/'+fileName)
+         file1.mv('public/files/forms/'+email +'/'+fileName1)
+         file2.mv('public/files/forms/'+email +'/'+fileName2)
+        }else{
+           errors.push({msg:'upload a jpg ,jpeg or png file'})
+        }
+      }
+     else{
+         errors.push({msg:'please upload the documents'})
      }
       
    const ad_class = req.body.Class;
@@ -86,8 +102,9 @@ router.post('/admission',function(req,res){
    const prev_result= req.body.prev_result;
    
    const AdmissionForm = new admissionForm({
+      dclass:dclass,
       name :fullname,
-      email:user.email,
+      email:email,
       Admission_class:ad_class ,
       dob :dob,
       dob_day:dob_day,
@@ -140,6 +157,8 @@ router.post('/admission',function(req,res){
       },
       Any_other_info:info ,
       studentPic :fileName,
+      fpic:fileName1,
+      mpic:fileName2,
       prev_school :prev_school,
       prev_class:  prev_class,
       prev_position:prev_position,
@@ -166,8 +185,9 @@ router.post('/admission',function(req,res){
                user:User,
                student:Student,
                errors:errors,
+               title:'Online Apply',
                father_Designation,ad_class,fullname ,dob,dob_day,dob_Month,dob_year,father_work,father_Annual_Income,father_qual,
-               nationality,Religion,gender,fatherName,father_Occupation,father_Designation,father_contact,motherName,
+               nationality,Religion,gender,fatherName,father_Occupation,father_Designation,father_contact,motherName,mother_Annual_Income,
                mother_Occupation,mother_Designation,mother_qual,mother_work ,mother_contact,state,home,present_address,
                permanent_address,one_class,one_name,one_admsn,one_Sec,two_name,two_admsn,two_class,two_Sec,info,prev_school,
                prev_class,prev_position,prev_medium,skills,skills_certificate,prev_result
@@ -184,7 +204,7 @@ router.post('/admission',function(req,res){
             if(err){
                console.log(err)
             }else{
-               res.render('/admission')
+               res.redirect('/admission')
             }
          });
       }
@@ -195,16 +215,16 @@ router.post('/admission',function(req,res){
    const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-          user: "nahidali412@gmail.com",
-          pass: "8824722331",
+          user: "dpspakurweb@gmail.com",
+          pass: "8877115641",
       },
   });
-  const email =user.email
+  const email =User.email
   const mailOptions = {
-   from: '"Auth Admin" <nahidali412@gmail.com>', // sender address
+   from: '"Auth Admin" <dpspakurweb@gmail.com>', // sender address
    to: email, // list of receivers
-   subject: "Account Verification: NodeJS Auth ✔", // Subject line
-   html: `<h1> Your form is under review`, // html body
+   subject: "Form Review ✔", // Subject line
+   html: `<h1> Your form is has been submitted sucessfully and is under review`, // html body
 };
 
 transporter.sendMail(mailOptions, (error, info) => {
@@ -226,21 +246,192 @@ transporter.sendMail(mailOptions, (error, info) => {
    }
 })
 }
+   }else{
+      var User=req.user;
+      var email=User.email
+      if(req.files){
+
+         var dfile =req.files.dimage
+         var dfile1 =req.files.dimage1
+         console.log(dfile)
+          
+         var dfileName=dfile.name
+         var dfileName1=dfile1.name
+         
+         if(dfile.mimetype=='image/jpeg'||dfile.mimetype=='image/png'&& dfile1.mimetype=='image/jpeg'||dfile1.mimetype=='image/png' ){
+            mkdirp('public/files/forms/'+email)
+            dfile.mv('public/files/forms/'+email +'/'+dfileName)
+            dfile1.mv('public/files/forms/'+email +'/'+dfileName1)
+            
+           }else{
+              errors.push({msg:'upload a jpg ,jpeg or png file'})
+           }
+         }
+        else{
+            errors.push({msg:'please upload the documents'})
+        }
+      var name=req.body.dname
+      var mob =req.body.dmob
+      var dob = req.body.ddob
+      var category = req.body.dcategory
+      var yop =req.body.dyop
+      var school = req.body.dschool
+      var nob =req.body.dnob
+      var agg =req.body.dagg
+      var maths = req.body.dmaths
+      var science = req.body.dscience
+      var ceng = req.body.dceng
+      var cmaths = req.body.dcmaths
+      var stream = req.body.dstream
+      var one = req.body.done
+      var two = req.body.dtwo 
+      var three =req.body.dthree
+      var four = req.body.dfour 
+      var five = req.body.dfive 
+      var six = req.body.dsix
+      var cone = req.body.dcone
+      var ctwo = req.body.dctwo 
+      var cthree =req.body.dcthree
+      var cfour = req.body.dcfour 
+      var cfive = req.body.dcfive 
+      var csix = req.body.dcsix
+      var father = req.body.dfather 
+      var mother = req.body.dmother
+      var demail = req.body.demail
+      var Occupation = req.body.doccupation
+      var phno = req.body.dphno
+      var adress = req.body.dadress
+      const AdmissionForm =new admissionForm({
+         dclass:dclass,
+         email:email,
+         eleven:{
+
+            name:name,
+            mob:mob,
+            dob:dob,
+            category:category,
+            yop:yop,
+            school:school,
+            nob:nob,
+            agg:agg,
+            maths:maths,
+            science:science,
+            ceng:ceng,
+            cmaths:cmaths,
+            stream:stream,
+            one:one,
+            two:two,
+            three:three,
+            four:four,
+            five:five,
+            six:six,
+            cone:cone,
+            ctwo:ctwo,
+            cthree:cthree,
+            cfour:cfour,
+            cfive:cfive,
+            csix:csix,
+            father:father,
+            mother:mother,
+            email:demail,
+            phno:phno,
+            Occupation:Occupation,
+            adress:adress,
+            pic:dfileName,
+            fpic:dfileName1
+         }
+      })
+      if(!name||!mob||!dob ||!category||!yop||!school|| !nob||!maths||!agg||!science||!ceng||!cmaths||!stream||!one||!two
+         ||!three||!four||!five||!six||!cone||!ctwo||!cthree||!cfour||!cfive||!csix||!father||!mother||!email||!phno||!Occupation
+         ||!adress){
+            errors.push({msg:"enter all fields"})
+         }
+         if (errors.length > 0) {
+            var User =req.user
+            admissionForm.findOne({email:User.email},function(err,Student){
+               if(err){
+                  console.log(err)
+               }else{
+                  res.render('admission_from',{
+                     user:User,
+                     student:Student,
+                     errors:errors,
+                     title:'Online Apply'
+                  })
+               }
+            })
+      }else{
+         var User =req.user
+         studentUser.findOneAndUpdate({email:User.email},{submit:true},function(err){
+            if(err){
+               console.log(err)
+            }else{
+               AdmissionForm.save((err)=>{
+                  if(err){
+                     console.log(err)
+                  }else{
+                     res.redirect('/admission')
+                  }
+               });
+            }
+           
+         })
+         
+         
+         const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: "dpspakurweb@gmail.com",
+                pass: "8877115641",
+            },
+        });
+        const email =req.user.email
+        const mailOptions = {
+         from: '"Auth Admin" <dpspakurweb@gmail.com>', // sender address
+         to: email, // list of receivers
+         subject: "Form review", // Subject line
+         html: `<h1> Your form is has been submitted sucessfully and is under review`, // html body
+      };
+      
+      transporter.sendMail(mailOptions, (error, info) => {
+         if (error) {
+             console.log(error);
+             req.flash(
+                 'error_msg',
+                 'Something went wrong on our end. Please register again.'
+             );
+             res.redirect('/auth/login');
+         }
+         else {
+             console.log('Mail sent : %s', info.response);
+             req.flash(
+                 'success_msg',
+                 'Activation link sent to email ID. Please activate to log in.'
+             );
+             res.send('success');
+         }
+      })
+      }
+   }
+   
   
 
 
 })
  
-router.get('/admissionPdf/:id',function(req,res){
+router.get('/admissionPdf/:id',isAdmin,function(req,res){
    var id =req.params.id;
    admissionForm.findById(id,(err,user)=>{
       if(err){
          console.log(err)
       }
       else{
-         var n=user.name;
+         var c=user.dclass
+         var email=user.email
+         if(c!='eleven'){
+            var n=user.name;
          const doc = new PDFDocument;
-         doc.pipe(fs.createWriteStream(n+'.pdf'));
+         doc.pipe(fs.createWriteStream('public/files/forms/'+email+'/'+n+'.pdf'));
           
          // Add an image, constrain it to a given size, and center it vertically and horizontally
          doc.image(__dirname+'/file/dps-admission-form-page-002-m.jpg',0,0, {
@@ -248,7 +439,7 @@ router.get('/admissionPdf/:id',function(req,res){
              align: 'center',
              valign: 'center'
           })
-          .image(__dirname+'/file/'+user.studentPic,485,125,{fit:[100,100]})
+          .image('public/files/forms/'+user.email+'/'+user.studentPic,485,125,{fit:[100,100]})
           .fontSize(15)
           .text(user.Admission_class,175,205)
           .text(user.name,175,235)
@@ -295,8 +486,8 @@ router.get('/admissionPdf/:id',function(req,res){
             .text(user.sibling.one.class,320,335)
             .text(user.sibling.one.sec,440,335)
             .text(user.Any_other_info,50,400)
-            // .image(__dirname+'/file/'+user.fatherSign,485,125,{fit:[100,100]})
-            // .image(__dirname+'/file/'+user.motherSign,485,125,{fit:[100,100]})
+            .image('public/files/forms/'+user.email+'/'+user.fpic,485,125,{fit:[100,100]})
+            .image('public/files/forms/'+user.email+'/'+user.mpic,485,125,{fit:[100,100]})
             .fontSize(10)
             .text(user.prev_school,200,630)
             .text(user.prev_class,320,645)
@@ -305,15 +496,66 @@ router.get('/admissionPdf/:id',function(req,res){
             .text(user.skills,400,690);
           
          doc.end();
-         res.send('success')
+         var file='public/files/forms/'+n+'.pdf'
+         res.download(file)
           
+      }else{
+         var n=user.eleven.name
+         const doc = new PDFDocument;
+         doc.pipe(fs.createWriteStream('public/files/forms/'+user.email+'/'+n+'.pdf'));
+          
+         // Add an image, constrain it to a given size, and center it vertically and horizontally
+         doc.image('public/img/class-xi form image.jpg',0,0, {
+             fit:[615,785],
+             align: 'center',
+             valign: 'center'
+          })
+          .fontSize(12)
+          .text(user.eleven.name,75,120)
+          .text(user.eleven.dob,100,135)
+          .text(user.eleven.category,100,150)
+          .text(user.eleven.yop,180,185)
+          .text(user.eleven.school,300,185)
+          .text(user.eleven.nob,130,200)
+          .text(user.eleven.agg,350,217)
+          .text(user.eleven.maths,90,234)
+          .text(user.eleven.science,190,234)
+          .text(user.eleven.ceng,90,251)
+          .text(user.eleven.cmaths,190,251)
+          .text(user.eleven.stream,90,300)
+          .text(user.eleven.one,100,363)
+          .text(user.eleven.two,100,378)
+          .text(user.eleven.three,100,393)
+          .text(user.eleven.four,210,363)
+          .text(user.eleven.five,210,378)
+          .text(user.eleven.six,210,393)
+          .text(user.eleven.cone,360,363)
+          .text(user.eleven.ctwo,360,378)
+          .text(user.eleven.cthree,360,393)
+          .text(user.eleven.cfour,470,363)
+          .text(user.eleven.cfive,470,378)
+          .text(user.eleven.csix,470,393)
+          .text(user.eleven.email,410,415)
+          .text(user.eleven.father,130,435)
+          .text(user.eleven.mother,130,451)
+          .text(user.eleven.Occupation,440,435)
+          .text(user.eleven.phno,440,450)
+          .text(user.eleven.adress,90,480)
+          .text(user.eleven.father,90,550)
+          .text(user.eleven.name,370,550)
+          .text(user.eleven.phno,130,610)
+          doc.end();
+          var file='public/files/forms/'+n+'.pdf'
+          res.download(file)
       }
+         }
+         
    })
    
    
 })
 
-router.get('/formlist',function(req,res){
+router.get('/formlist',isAdmin,function(req,res){
    admissionForm.find({},function(err,users){
       res.render('form_list',{
          Users:users
@@ -326,24 +568,25 @@ router.get('/form/approve/:id',function(req,res){
       if(err){
          console.log(err)
       }else{
-         var email=user.email
+         const email=user.email 
          studentUser.findOneAndUpdate({email:email},{approved:true},function(err){
             if(err){
                console.log(err)
             }else{
+                
                const transporter = nodemailer.createTransport({
                   service: 'gmail',
                   auth: {
-                      user: "nahidali412@gmail.com",
-                      pass: "8824722331",
+                      user: "dpspakurweb@gmail.com",
+                      pass: "8877115641",
                   },
               });
                
               const mailOptions = {
-               from: '"Auth Admin" <nahidali412@gmail.com>', // sender address
-               to: user.email, // list of receivers
-               subject: "Account Verification: NodeJS Auth ✔", // Subject line
-               html: `<h1> approved</h1>`, // html body
+               from: '"Auth Admin" <dpspakurweb@gmail.com>', // sender address
+               to: email, // list of receivers
+               subject: "Form Approval ✔", // Subject line
+               html: `<h1> Your form is approved please login to continue</h1>`, // html body
             };
             
             transporter.sendMail(mailOptions, (error, info) => {
@@ -361,7 +604,7 @@ router.get('/form/approve/:id',function(req,res){
                        'success_msg',
                        'Activation link sent to email ID. Please activate to log in.'
                    );
-                   res.send('success');
+                   res.redirect('/formlist');
                }
             })
             }
@@ -373,6 +616,19 @@ router.get('/form/approve/:id',function(req,res){
 })
 router.get('/form/delete/:id',function(req,res){
    var id =req.params.id;
+   admissionForm.findById(id,function(err,user){
+      if(err){
+         console.log(err)
+      }else{
+         var email =user.email
+         studentUser.findOneAndDelete({email:email},function(err){
+            if(err){
+               console.log(err)
+            }
+         })
+         fs.remove('public/files/forms/'+email)
+      }
+   })
    admissionForm.findByIdAndDelete(id,function(err){
       if(err){
          console.log(err)
@@ -381,16 +637,92 @@ router.get('/form/delete/:id',function(req,res){
       }
    })
 })
-router.get('/form/:id',function(req,res){
+router.get('/form/:id',isAdmin,function(req,res){
    var id=req.params.id;
+   admissionForm.findById(id,function(err,student){
+      if(err){
+         console.log(err)
+      }else{
+         studentUser.findOne({email:student.email},function(err,user){
+            if(err){
+               console.log(err)
+            }else{
+               res.render('form',{student:student,User:user})
+            }
+         })
+         
+        
+      }
+   })
+  
+})
+router.get('/form/reject/:id',function(req,res){
+   var id=req.params.id
    admissionForm.findById(id,function(err,user){
       if(err){
          console.log(err)
       }else{
-         res.render('form',{student:user})
+         res.render('reject',{student:user})
+
       }
    })
   
+})
+router.post('/form/reject/:id',function(req,res){
+   var id =req.params.id;
+   admissionForm.findById(id,function(err,user){
+      if(err){
+         console.log(err)
+      }else{
+         var email =user.email
+         fs.remove('public/files/forms/'+email)
+         const msg=req.body.msg
+         studentUser.findOneAndUpdate({email:email},{submit:false},function(err){
+            if(err){
+               console.log(err)
+            }else{
+               const transporter = nodemailer.createTransport({
+                  service: 'gmail',
+                  auth: {
+                      user: "dpspakurweb@gmail.com",
+                      pass: "8877115641",
+                  },
+              });
+               
+              const mailOptions = {
+               from: '"Auth Admin" <dpspakurweb@gmail.com>', // sender address
+               to: email, // list of receivers
+               subject: "Account Verification: NodeJS Auth ✔", // Subject line
+               html: `<h1> Your form is rejected because of the given reasons: </h1> <br> <h3> `+msg+`</h3>`, // html body
+            };
+            
+            transporter.sendMail(mailOptions, (error, info) => {
+               if (error) {
+                   console.log(error);
+                   req.flash(
+                       'error_msg',
+                       'Something went wrong on our end. Please register again.'
+                   );
+                   res.redirect('/auth/login');
+               }
+               else {
+                   console.log('Mail sent : %s', info.response);
+                   req.flash(
+                       'success_msg',
+                       'successfully rejected'
+                   );
+                   res.redirect("/formlist");
+               }
+            })
+            }
+         })
+      }
+   })
+   admissionForm.findByIdAndDelete(id,function(err){
+      if(err){
+         console.log(err)
+      }
+   })
 })
 
 module.exports=router;

@@ -1,6 +1,7 @@
 <%- include('partials/header')%>
 <body>
     <div class="login">
+        <%- include ("partials/messages") %>
         <h2>Welcome please login to continue</h2>
         <form class="row contact_form" action="" method="post" novalidate="novalidate">
             <div class="col-md-12 form-group p_star">
@@ -16,7 +17,7 @@
                 <button type="submit" value="submit" class="btn_trans_green">
                     log in
                 </button>
-                <a class="lost_pass" href="#">forget password?</a>
+                <a class="lost_pass" href="/auth/forgot">forget password?</a>
             </div>
         </form>
     </div>

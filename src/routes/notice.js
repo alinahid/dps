@@ -7,16 +7,17 @@ const fs = require('fs-extra');
 var router = express.Router();
 var isAdmin = auth.isAdmin;
  
-router.get('/upload',isAdmin, function (req, res) {
+router.get('/admin/upload',isAdmin, function (req, res) {
   res.render('file_upload')
 })
-router.post('/upload',function(req,res){
+router.post('/admin/upload',function(req,res){
   
   
   if(req.files){
 
     var file =req.files.sampleFile
     var fileName=file.name
+     
     var title=req.body.title
     var notice = new Notice({
       title: fileName,
@@ -24,24 +25,25 @@ router.post('/upload',function(req,res){
       
     });
     notice.save();
-  }file.mv(__dirname+'/file/'+fileName,function(err){
+  }file.mv("public/files/notices/"+ fileName,function(err){
     if(err){
       res.send(err)
     }else{
-      res.redirect('/admin/notice')
+      res.redirect('/notice/admin/notice')
     }
   })
 })
 
  
 router.get('/:name',function(req,res){
-    var file=__dirname +'/file/'+req.params.name;
+    var file='public/files/notices/'+req.params.name;
     res.download(file);
   })
-router.get('/notice',function(req,res){
+router.get('/',function(req,res){
     Notice.find({},function(err,notices){
       res.render('test',{
-        notices:notices
+        notices:notices,
+        title: "Notices | DPS Pakur"
       }
       
       )
@@ -49,7 +51,7 @@ router.get('/notice',function(req,res){
     })
     
   })
-  router.get('/',isAdmin,function(req,res){
+  router.get('/admin/notice',isAdmin,function(req,res){
     Notice.find({},function(err,notices){
       res.render('admin_notice',{
         notices:notices
@@ -63,12 +65,16 @@ router.get('/notice',function(req,res){
   router.get('/delete/:id',function(req,res){
     var id =req.params.id
     Notice.findOne({_id:id},function(err,user){
-      var file=__dirname+'/file/'+user.title;
+      var file='public/files/notices/'+user.title;
       fs.remove(file);
     })
     Notice.findByIdAndRemove(id, function (err) {
-      console.log(err);
+      if(err){
+        res.send(err)
+      }else{
+        res.redirect('/notice/admin/notice')
+      }
     });
-    res.redirect('/admin/notice')
+    
   })
   module.exports = router;
